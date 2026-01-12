@@ -1,88 +1,44 @@
-# Week 1 Day 7 — Recap (Nav2 TB3 Demo + Baseline)
+# Week 1 Day 7 — 复盘（Nav2 跑通 + Baseline 数据）
 
-## 1) 30s Interview Pitch (spoken)
+## 1) 30 秒口播稿（面试版）
 
-I ran Nav2 successfully on TurtleBot3 in Gazebo and fixed a reproducible evaluation criterion:  
-I extract the goal (x, y) from the `bt_navigator` log and the final pose from `/amcl_pose`, then compute FinalDist in the `map` frame. **FinalDist ≤ 0.25 m is counted as Success**.
+我在 TurtleBot3 的 Gazebo 仿真里跑通了 Nav2，并把评估口径固定为可复现的标准：  
+从 `bt_navigator` 日志中提取 goal 的 (x, y)（map 坐标系），从 `/amcl_pose` 读取机器人最终位置（map 坐标系），计算两者的欧氏距离 FinalDist。**FinalDist ≤ 0.25 m 判定为 Success**。
 
-Under the baseline setup (same start pose, same map, and four fixed goal points A/B/C/D), I ran 12 trials:  
-**D: 3/3 success, A: 0/3, C: 0/3, B: 1/3**, overall **4/12 = 33.3%**.
+在 baseline 条件下（同一起点、同一张地图、固定四个目标点 A/B/C/D），我跑了 12 次：  
+**D 点 3/3 成功，A 点 0/3 失败，C 点 0/3 失败，B 点 1/3 成功**，总体 **4/12 = 33.3%**。
 
-This indicates the robot usually approaches the goal area, but there are cases where Nav2 reports **“Goal succeeded”** while my fixed FinalDist criterion still fails (often stopping around 0.3–0.4 m away).  
-Next, I will run a **2×2 controlled experiment** around **costmap inflation** and **goal checker / controller goal-reaching behavior** (baseline / A / B / A+B), targeting **≥85% success** under the same evaluation metric.
+这说明机器人多数情况下能走到目标附近，但存在“Nav2 输出 `Goal succeeded` 与我固定评估口径不一致”的情况，部分 run 会停在距离目标约 0.3–0.4m 的位置。  
+下一步我会围绕 **costmap 膨胀** 与 **goal checker / controller 的到点行为**做 **2×2 对照实验（baseline / A / B / A+B）**，目标是在相同评估标准下把成功率提升到 **≥85%**，并用数据验证改动有效性。
 
-## 2) Nav2 Pipeline (interview-friendly explanation)
+## 2) Nav2 链路说明（说人话版）
 
-### TF (Transforms)
-- **Input:** `/tf`, `/tf_static` (must have a stable chain `map → odom → base_link`)
-- **Output:** A consistent coordinate system so sensors, robot pose, and map align
-- **If broken:** RViz errors, costmaps fail to update correctly, planner timeouts, AMCL cannot publish transforms
+### TF（坐标变换）
+- **输入**：`/tf`、`/tf_static`（关键链路 `map → odom → base_link` 必须稳定存在）
+- **输出**：让“地图、机器人姿态、传感器数据”落在同一坐标系中
+- **坏了会怎样**：RViz 报错、costmap 不更新/错位、planner 超时、AMCL 无法发布 transform
 
-### Costmap (Global/Local)
-- **Input:** map (static layer), sensor obstacles (obstacle layer), TF (for frame transforms)
-- **Output:** `global_costmap` and `local_costmap` grids with inflated safety margins
-- **If broken:** too conservative (stops far from goal / avoids corridors), too aggressive (clips obstacles), “ghost obstacles” causing oscillation
+### Costmap（代价地图：全局/局部）
+- **输入**：静态地图（静态层）、传感器障碍（障碍层）、TF（把数据变换到 map/odom）
+- **输出**：`global_costmap` 与 `local_costmap` 栅格（含 inflation 膨胀安全距离）
+- **坏了会怎样**：过度保守（贴墙/窄道不敢走、到点停得远）、过度激进（贴障碍风险高）、幽灵障碍导致原地抖动/打转
 
-### Planner (Global planning)
-- **Input:** `global_costmap`, start pose, goal pose
-- **Output:** a global path (plan) to the goal
-- **If broken:** “No valid plan”, frequent replans, low planning rate / timeouts
+### Planner（全局规划）
+- **输入**：`global_costmap`、起点、目标点
+- **输出**：全局路径（global plan）
+- **坏了会怎样**：No valid plan、规划频率下降、超时
 
-### Controller (Local control)
-- **Input:** `local_costmap`, current robot pose, global plan
-- **Output:** velocity commands `/cmd_vel`
-- **If broken:** spinning in place, jittering, stopping early near goal, failing to follow the global plan
+### Controller（局部控制）
+- **输入**：`local_costmap`、当前姿态、全局路径
+- **输出**：速度指令 `/cmd_vel`
+- **坏了会怎样**：原地打转、抖动、走走停停、到点附近犹豫/提前停下
 
-### BT Navigator (Behavior Tree + Recovery)
-- **Input:** goal + feedback from planner/controller + recovery behaviors (spin/backup/etc.)
-- **Output:** orchestrated navigation workflow: plan → control → recover → continue
-- **Note:** Nav2 “Goal succeeded” is based on internal conditions; for experiments I use the fixed FinalDist metric to keep comparisons consistent.
+### BT Navigator（行为树与恢复）
+- **输入**：目标点 + planner/controller 反馈 + 恢复行为（Spin/BackUp 等）
+- **输出**：导航流程编排（规划 → 控制 → 必要时恢复 → 继续）
+- **备注**：Nav2 的 `Goal succeeded` 是系统内部条件；为了可对比实验，我使用固定的 FinalDist 口径统一衡量 Success。
 
-## 3) Evidence (Week1)
-- Day5 demo video: `videos/week1_day5_demo.mp4`
-- Day6 baseline data: `results/day6_baseline.csv`
-- Goal points screenshot: `picture/day6_ABCDpoint.png`
-# Week 1 Day 7 — Recap (Nav2 TB3 Demo + Baseline)
-
-## 1) 30s Interview Pitch (spoken)
-
-I ran Nav2 successfully on TurtleBot3 in Gazebo and fixed a reproducible evaluation criterion:  
-I extract the goal (x, y) from the `bt_navigator` log and the final pose from `/amcl_pose`, then compute FinalDist in the `map` frame. **FinalDist ≤ 0.25 m is counted as Success**.
-
-Under the baseline setup (same start pose, same map, and four fixed goal points A/B/C/D), I ran 12 trials:  
-**D: 3/3 success, A: 0/3, C: 0/3, B: 1/3**, overall **4/12 = 33.3%**.
-
-This indicates the robot usually approaches the goal area, but there are cases where Nav2 reports **“Goal succeeded”** while my fixed FinalDist criterion still fails (often stopping around 0.3–0.4 m away).  
-Next, I will run a **2×2 controlled experiment** around **costmap inflation** and **goal checker / controller goal-reaching behavior** (baseline / A / B / A+B), targeting **≥85% success** under the same evaluation metric.
-
-## 2) Nav2 Pipeline (interview-friendly explanation)
-
-### TF (Transforms)
-- **Input:** `/tf`, `/tf_static` (must have a stable chain `map → odom → base_link`)
-- **Output:** A consistent coordinate system so sensors, robot pose, and map align
-- **If broken:** RViz errors, costmaps fail to update correctly, planner timeouts, AMCL cannot publish transforms
-
-### Costmap (Global/Local)
-- **Input:** map (static layer), sensor obstacles (obstacle layer), TF (for frame transforms)
-- **Output:** `global_costmap` and `local_costmap` grids with inflated safety margins
-- **If broken:** too conservative (stops far from goal / avoids corridors), too aggressive (clips obstacles), “ghost obstacles” causing oscillation
-
-### Planner (Global planning)
-- **Input:** `global_costmap`, start pose, goal pose
-- **Output:** a global path (plan) to the goal
-- **If broken:** “No valid plan”, frequent replans, low planning rate / timeouts
-
-### Controller (Local control)
-- **Input:** `local_costmap`, current robot pose, global plan
-- **Output:** velocity commands `/cmd_vel`
-- **If broken:** spinning in place, jittering, stopping early near goal, failing to follow the global plan
-
-### BT Navigator (Behavior Tree + Recovery)
-- **Input:** goal + feedback from planner/controller + recovery behaviors (spin/backup/etc.)
-- **Output:** orchestrated navigation workflow: plan → control → recover → continue
-- **Note:** Nav2 “Goal succeeded” is based on internal conditions; for experiments I use the fixed FinalDist metric to keep comparisons consistent.
-
-## 3) Evidence (Week1)
-- Day5 demo video: `videos/week1_day5_demo.mp4`
-- Day6 baseline data: `results/day6_baseline.csv`
-- Goal points screenshot: `picture/day6_ABCDpoint.png`
+## 3) 证据与数据（Week1）
+- Day5 Demo 视频：`videos/week1_day5_demo.mp4`
+- Day6 Baseline 数据：`results/day6_baseline.csv`
+- 目标点截图（A/B/C/D）：`picture/day6_ABCDpoint.png`
