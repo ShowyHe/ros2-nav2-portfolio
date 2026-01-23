@@ -66,7 +66,7 @@ Success 样本里要确认的模式：
 补充说明：
 - `success.log` 命中 `NavigateRecovery` 不代表发生恢复动作；是否发生恢复，以是否出现 `ClearLocalCostmap / spin / backup / drive_on_heading` 等“具体动作节点”为准（见样本 B）。
 
-（可选：关键字命中，方便面试逐行指认）
+（可选：关键字命中）
     grep -nE "NavigateRecovery|ComputePathToPose|RateController|FollowPath|ClearLocalCostmap|Spin|BackUp|backup|spin|FAILURE|SUCCESS|RUNNING" /tmp/week2_day5_bt_success.log | tail -n 120
 
 ---

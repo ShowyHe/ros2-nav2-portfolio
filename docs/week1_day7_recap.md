@@ -1,6 +1,6 @@
 # Week 1 Day 7 — 复盘（Nav2 跑通 + Baseline 数据）
 
-## 1) 30 秒口播稿（面试版）
+## 1) 总览
 
 我在 TurtleBot3 的 Gazebo 仿真里跑通了 Nav2，并把评估口径固定为可复现的标准：  
 从 `bt_navigator` 日志中提取 goal 的 (x, y)（map 坐标系），从 `/amcl_pose` 读取机器人最终位置（map 坐标系），计算两者的欧氏距离 FinalDist。**FinalDist ≤ 0.25 m 判定为 Success**。
@@ -11,7 +11,7 @@
 这说明机器人多数情况下能走到目标附近，但存在“Nav2 输出 `Goal succeeded` 与我固定评估口径不一致”的情况，部分 run 会停在距离目标约 0.3–0.4m 的位置。  
 下一步我会围绕 **costmap 膨胀** 与 **goal checker / controller 的到点行为**做 **2×2 对照实验（baseline / A / B / A+B）**，目标是在相同评估标准下把成功率提升到 **≥85%**，并用数据验证改动有效性。
 
-## 2) Nav2 链路说明（说人话版）
+## 2) Nav2 链路说明
 
 ### TF（坐标变换）
 - **输入**：`/tf`、`/tf_static`（关键链路 `map → odom → base_link` 必须稳定存在）

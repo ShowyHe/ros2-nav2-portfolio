@@ -1,6 +1,6 @@
-# Week2 Day1 — Nav2 链路一页纸（面试版）
+# Week2 Day1 — Nav2 链路
 
-## 0. 一句话总览（10 秒）
+## 0. 总览
 Nav2 = **定位（AMCL/TF） + 代价地图（costmap） + 全局规划（planner） + 局部控制（controller） + 行为树编排（BT）**，把目标点变成 `/cmd_vel`，并在失败时用恢复行为继续推进。
 
 ## 1. 数据流：从“点目标”到“机器人动起来”
@@ -50,12 +50,12 @@ Nav2 = **定位（AMCL/TF） + 代价地图（costmap） + 全局规划（planne
 - 输出：导航执行流程（含恢复）
 - 坏了：卡在恢复循环、频繁 spin、或系统报 succeeded 但实际停得偏远（需要统一评估口径）
 
-## 3. Week1 Baseline 现象（用数据说话）
+## 3. Week1 Baseline 现象
 - 评估口径：goal (x,y) 来自 `bt_navigator` log；final 来自 `/amcl_pose`；FinalDist ≤ **0.25 m** 判 Success
 - 结果：12 次 baseline：D 3/3 成功，A 0/3，C 0/3，B 1/3，总体 4/12
 - 解释：多数能靠近目标，但存在 “Nav2 Goal succeeded 与 FinalDist 口径不一致/提前停下” 的现象，后续用 2×2 对照实验定位（costmap inflation vs goal checker/controller）
 
-## 4. 我今天要能回答的 3 个问题（自测）
-1) 机器人不动了，我第一眼看 TF 还是 /cmd_vel？为什么？【TODO：写你的答案一句话】
-2) RViz 里 global/local costmap 看起来差很多，可能是哪两类原因？【TODO：写两条】
-3) 为什么我不用 “Nav2 succeeded” 直接当 success？【TODO：写一句话】
+## 4. 3 个问题供复习
+1) 机器人不动了，我第一眼看 TF 还是 /cmd_vel？为什么？
+2) RViz 里 global/local costmap 看起来差很多，可能是哪两类原因？
+3) 为什么我不用 “Nav2 succeeded” 直接当 success？

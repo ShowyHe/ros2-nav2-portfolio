@@ -1,6 +1,6 @@
 # Week2 Day3 — Costmap 实验 + 排查剧本（TB3 + Nav2）
 
-目标：用 3 个可复现实验证明 costmap 的关键层如何影响机器人行为，并形成可背诵的排查剧本（面试可直接复述）。
+目标：用 3 个可复现实验证明 costmap 的关键层如何影响机器人行为，并形成可背诵的排查剧本。
 
 ---
 
@@ -18,7 +18,7 @@
 
 ---
 
-## 1) Baseline（正常）
+## 1) Baseline
 
 ### 1.1 RViz 证据
 - 图：picture/costmap/week2_day3/week2_day3_baseline.png
@@ -64,8 +64,7 @@ baseline 下 local costmap 为 rolling window，障碍周围存在膨胀代价�
 
 ---
 
-## 2) 实验A：膨胀过大（“怂包”）
-
+## 2) 实验A：膨胀过大
 ### 2.1 修改参数（只改 local costmap inflation）
 
 命令：
@@ -106,8 +105,7 @@ Double value is: 10.0
 
 ---
 
-## 3) 实验B：膨胀过小（“莽夫”）
-
+## 3) 实验B：膨胀过小
 ### 3.1 修改参数
 
 命令：
@@ -144,7 +142,7 @@ Double value is: 1.0
 
 ---
 
-## 4)实验C：关障碍层（“瞎子模式”）
+## 4)实验C：关障碍层
 
 ### 4.1 恢复 baseline inflation（保证只测试 obstacle_layer）
 
