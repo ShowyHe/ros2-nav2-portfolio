@@ -1,0 +1,11 @@
+run,result,time_sec,recovery,recovery_types,recovery_hits,start_line,end_line,notes
+1,S,14.6,N,,0,1,1034,clean
+2,S,15.6,N,,0,7717,8750,clean
+3,S,17.3,N,,0,10352,11511,clean
+4,S,15.5,N,,0,13050,14083,clean
+5,S,15.2,N,,0,15685,16718,clean
+6,S,15.1,N,,0,18131,19164,clean
+7,S,15.2,N,,0,20703,21736,clean
+8,S,15.0,N,,0,23210,24245,clean
+9,S,15.6,N,,0,25658,26691,clean
+10,S,19.0,N,,0,28167,29418,clean
