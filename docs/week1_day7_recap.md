@@ -40,5 +40,5 @@
 
 ## 3) 证据与数据（Week1）
 - Day5 Demo 视频：`videos/week1_day5_demo.mp4`
-- Day6 Baseline 数据：`results/day6_baseline.csv`
-- 目标点截图（A/B/C/D）：`picture/day6_ABCDpoint.png`
+- Day6 Baseline 数据：`results/w1d6_baseline.csv`
+- 目标点截图（A/B/C/D）：`picture/week_day6_ABCDpoint.png`

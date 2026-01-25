@@ -41,3 +41,8 @@
 ## Summary
 - runs=10, success=10/10 (100.0%), avg_time=15.81s, median_time=15.35s, recovery_runs=0
 - recovery_runs=0 表示 10 次导航均未触发清图/倒车/旋转等恢复动作（评估集为“纯净成功样本”），后续 W3D2/W3D3 再加入“故障注入”验证恢复链路。
+
+## 固定评估场景（本次 10 runs 口径）
+- 起点：沿用 Week1 Day6 的固定起点（见图片 `picture/week1_day6_ABCDpoint.png`）
+- 终点：A 点
+- 说明：固定起终点是为了让不同 run 的 time_sec / success 可比（后续 Week3/4 做对照实验用同一口径）

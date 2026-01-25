@@ -9,7 +9,7 @@
   - BT log 新增内容命中任一关键词 ⇒ Recovery=Y：`ClearLocalCostmap|ClearGlobalCostmap|backup|spin|drive_on_heading|FAILURE`；否则 Recovery=N
 
 ## 起点 / 终点策略（固定）
-- 起点：见 `day6_ABCDpoint.png`（本次使用图中标注的固定起点）
+- 起点：见 `week1_day6_ABCDpoint.png`（本次使用图中标注的固定起点）
 - 终点：使用图中 **C 点**（需要拐弯、经过狭窄区域、最终停在开阔位置）
 
 ## 10 次记录表（Baseline）

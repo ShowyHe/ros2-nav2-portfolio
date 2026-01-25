@@ -39,7 +39,7 @@
 
 ### Day6：10 次 Baseline 量化记录
 - docs/week2_day6_baseline.md
-- picture/day6_ABCDpoint.png
+- picture/week1_day6_ABCDpoint.png
 
 ---
 
