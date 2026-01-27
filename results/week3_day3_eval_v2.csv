@@ -2,3 +2,6 @@ run,goal_id,result,time_sec,notes,recovery,recovery_types,recovery_hits,bt_start
 1,9f95bea08e49b96bf1e72e98f820829c,S,12.861,clean,N,,0,0,908
 2,21059c509abf1289563ceae8304686c8,T,3.481,cancel_test,N,,0,2635,2917
 3,9965de150d8f00d521525b515797334e,S,16.353,recovery_test,Y,ClearLocalCostmap,2,2917,4067
+4,90f2ea5aaee171b1ceda158034b1696b,S,13.122,,N,,0,0,0
+5,bc4e1dcb576b341fae2c05205a4277c1,S,11.861,,N,,0,0,0
+6,53e5d2b6f24fd1d6ef5eb315274e94b5,S,13.366,,N,,0,0,0

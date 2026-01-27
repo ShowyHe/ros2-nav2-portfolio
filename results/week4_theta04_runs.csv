@@ -1,0 +1,21 @@
+run,goal_id,result,time_sec,notes,recovery,recovery_types,recovery_hits,bt_start_line,bt_end_line
+1,38eab6a89a8c72dffeb69020f6258c7e,S,13.361,W4D4 Bprime theta=0.4,N,,0,0,0
+2,cb4d40915ecbc6458b2e66aca507305e,S,14.409,W4D4 Bprime theta=0.4,N,,0,0,0
+3,d408f1d05d88906568ef0f866a4ac390,S,12.961,W4D4 Bprime theta=0.4,N,,0,0,0
+4,74c2fb44de2c8773c5398ec913fcde12,S,14.240,W4D4 Bprime theta=0.4,N,,0,0,0
+5,fd9a1d0aef2674d04494ca3d094e5400,S,13.586,W4D4 Bprime theta=0.4,N,,0,0,0
+6,022a2a0128ceb7b564dd91ab851d4c6f,S,13.061,W4D4 Bprime theta=0.4,N,,0,0,0
+7,dcf08b22d1f39ca72a21cc7f75dd8689,S,12.471,W4D4 Bprime theta=0.4,N,,0,0,0
+8,c303afcd49180a0296d4143249bb66f4,S,13.061,W4D4 Bprime theta=0.4,N,,0,0,0
+9,05c8e1120154becec5f260e5416ae1cf,S,13.809,W4D4 Bprime theta=0.4,N,,0,0,0
+10,06dc6cff27a765a9219b31b56376f8af,S,14.005,W4D4 Bprime theta=0.4,N,,0,0,0
+11,7b6cb7c9cc9fe5042d6e0adaf77c578e,S,13.456,W4D4 Bprime theta=0.4,N,,0,0,0
+12,a5a38b251f5d302aa618e97dce5bd0c7,S,12.661,W4D4 Bprime theta=0.4,N,,0,0,0
+13,3d6ce030a43199d6eb1c5b8b59fdee76,S,13.060,W4D4 Bprime theta=0.4,N,,0,0,0
+14,704bd116a7430fcb29003cb73ff9aee3,S,14.060,W4D4 Bprime theta=0.4,N,,0,0,0
+15,1024426a7c636a3c10e30256dfdd86b1,S,12.861,W4D4 Bprime theta=0.4,N,,0,0,0
+16,9fccad89504d15c983ac8487d6c7252b,S,14.243,W4D4 Bprime theta=0.4,N,,0,0,0
+17,e423113ec47dad93e7a28f0c3db49601,S,14.038,W4D4 Bprime theta=0.4,N,,0,0,0
+18,1a19a540a6432e3ce90ebbcf5b9dc6f3,S,13.061,W4D4 Bprime theta=0.4,N,,0,0,0
+19,aeaf25f1f932a41ec75034adae506cce,S,14.269,W4D4 Bprime theta=0.4,N,,0,0,0
+20,ad8da64c66081347b6c8d30e5d5a5418,S,12.861,W4D4 Bprime theta=0.4,N,,0,0,0
