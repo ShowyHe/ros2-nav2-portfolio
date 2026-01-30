@@ -1,0 +1,9 @@
+Failed to make progress
+Running spin
+spin completed
+clear entirely the local_costmap
+clear entirely the global_costmap
+BackUp
+Wait
+AssistedTeleop
+DriveOnHeading

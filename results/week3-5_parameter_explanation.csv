@@ -1,0 +1,86 @@
+# Eval CSV 字段口径（简版但讲清楚）：数据从哪来 → 落到哪 → 脚本怎么写进 CSV
+
+> 这套字段 Week3–Week8 一直用。核心就三句话：  
+> 1）**goal_id/result/time_sec** 来自 **action 状态 topic + 脚本计时**；  
+> 2）**recovery 相关** 来自 **/behavior_tree_log 落盘到 btlog 文件**；  
+> 3）脚本把两路数据拼成一行，**append 写入** `--out` 指定的 CSV。
+
+---
+
+## 1) 两条数据来源（按“同一来源归并”）
+
+### A. Action 状态 topic（直接给出：goal_id + result；并触发计时窗口）
+- **来自哪里**：ROS2 action 的 status topic  
+  默认：`/navigate_to_pose/_action/status`
+- **怎么产生**：你在 RViz 点一次 Nav2 Goal → Nav2 发起一次 action goal → 系统持续发布该 goal 的状态（执行/成功/失败…）
+- **脚本怎么拿**：订阅 `GoalStatusArray`，锁定一个 `goal_id`，等它变成终态后得到 `result`
+- **最终写入 CSV 的列**：
+  - `goal_id`
+  - `result`
+
+### B. 脚本本地计时（给出：time_sec）
+- **来自哪里**：脚本用 ROS2 节点时钟 `node.get_clock().now()` 自己打点
+- **怎么产生**：同一个 goal 的生命周期里：
+  - 看到 goal 进入 ACTIVE → 记 `start_ns`
+  - 看到 goal 进入终态 → 记 `end_ns`
+  - `time_sec = (end_ns - start_ns)/1e9`
+- **最终写入 CSV 的列**：
+  - `time_sec`
+
+### C. /behavior_tree_log（给出：recovery / recovery_types / recovery_hits）
+- **来自哪里**：ROS2 topic `/behavior_tree_log`（BT 节点运行日志）
+- **怎么落到文件**：用终端把 topic 输出**追加写入**到一个文件（btlog）
+  - 例：`/tmp/week5_day2_map1_bt.log`
+  - 命令（必须常驻跑着）：
+        ros2 topic echo /behavior_tree_log >> /tmp/week5_day2_map1_bt.log
+- **脚本怎么拿**：只读 `--btlog` 这个文件的“新增部分”（本次 run 窗口），用 `configs/recovery_keywords.txt` 里的关键词做匹配统计
+- **最终写入 CSV 的列**：
+  - `recovery`（Y/N）
+  - `recovery_types`（命中的关键词类型，`;` 拼接）
+  - `recovery_hits`（命中次数总和）
+
+---
+
+## 2) CSV 里每一列到底怎么来（按“同路径归并”）
+
+### 2.1 来自 `--out` 这个 CSV 自己（run）
+- `run`：脚本看 `--out` 文件当前有多少行（含表头），下一行就用这个行数当 run_id  
+  你清空 CSV 后它就会从 1 重新开始。
+
+### 2.2 来自 action 状态 topic（goal_id / result）
+- `goal_id`：从 `/navigate_to_pose/_action/status` 里抓到的 16 字节 UUID 转 hex
+- `result`：终态映射（写死在脚本里）  
+  - SUCCEEDED→S，CANCELED→T，ABORTED→F
+
+### 2.3 来自脚本计时（time_sec）
+- `time_sec`：`end_ns - start_ns` 换算成秒
+
+### 2.4 来自命令行参数（notes）
+- `notes`：你传的 `--note` 原样写入
+
+### 2.5 来自 btlog 文件窗口（recovery / recovery_types / recovery_hits / bt_start_line / bt_end_line）
+- `bt_start_line`：脚本启动时 btlog 文件的行数
+- `bt_end_line`：脚本结束写 CSV 前 btlog 文件的行数
+- `recovery / recovery_types / recovery_hits`：只在 `[bt_start_line, bt_end_line)` 这段新增日志里按关键词统计得到
+
+> 你之前“看见 recovery 但 CSV 还是 N”的根因就是：btlog 没有在那一轮增长 → `bt_end_line == bt_start_line` → 窗口为空 → recovery 必然统计不到。
+
+---
+
+## 3) 脚本怎么把这些写进 CSV（你只要记住这一点）
+- 当脚本检测到本次 goal 进入终态（S/T/F）时：
+  1) 从 action status 得到 `goal_id/result`
+  2) 用 start/end 打点算 `time_sec`
+  3) 读 `--btlog` 的新增窗口算 `recovery*` 和 `bt_*`
+  4) 把这些字段拼成一个字典
+  5) 以 **append** 方式写入 `--out` 指定的 CSV（首次创建会先写表头）
+
+---
+
+## 4) 最短可复用口径（背这个就够）
+- `--out`：评估结果 CSV（脚本 append 写入）  
+- `--status_topic`：给 `goal_id/result`（action 状态）  
+- 脚本计时：给 `time_sec`  
+- `--btlog`：给 `recovery*`（前提是 `/behavior_tree_log` 正在落盘进这个文件）  
+- `--note`：给 `notes`  
+- `run`：由 `--out` 现有行数自增

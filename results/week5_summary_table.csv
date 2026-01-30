@@ -1,0 +1,4 @@
+map,runs,S,T,F,success_rate,timeout_rate,fail_rate,mean_time,median_time,p90_time,min_time,max_time,mean_hits,median_hits,p90_hits,max_hits,map3_timeout_visual_reached_rate,map3_timeout_visual_not_reached_rate
+Map1,20,20,0,0,1.00,0.00,0.00,28.8679,27.2435,35.5642,25.1600,37.1170,0.60,0.0,2.0,2.0,,
+Map2,20,15,4,1,0.75,0.20,0.05,75.1373,60.2210,120.0000,49.3610,120.0000,5.85,2.0,13.3,31.0,,
+Map3,20,1,19,0,0.05,0.95,0.00,117.3593,120.0000,120.0000,67.1860,120.0000,15.55,18.0,18.2,20.0,0.8421,0.1579

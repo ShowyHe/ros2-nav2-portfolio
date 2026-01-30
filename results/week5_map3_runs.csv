@@ -1,0 +1,21 @@
+run,goal_id,result,time_sec,notes,recovery,recovery_types,recovery_hits,bt_start_line,bt_end_line
+1,4010acce6bd85dc6c770b3e9abdda154,T,120.000,W5 Map3 timeout=120 run_1 | TIMEOUT:VISUAL=reached,Y,ClearLocalCostmap;ClearGlobalCostmap;Spin;BackUp,18,0,30641
+2,da097c87f3d1ae09c3f0b7e94f2f5e56,T,120.000,W5 Map3 timeout=120 run_2 | TIMEOUT:VISUAL=reached,Y,ClearLocalCostmap;BackUp;ClearGlobalCostmap;Spin,18,46174,77854
+3,e4e935780f6d30720b32ff65b2f7589d,T,120.000,W5 Map3 timeout=120 run_3 | TIMEOUT:VISUAL=reached,Y,ClearLocalCostmap;BackUp;ClearGlobalCostmap;Spin,20,84995,116112
+4,ab3341a43b1fe040f61532d4ffa1f6c6,T,120.000,W5 Map3 timeout=120 run_4 | TIMEOUT:VISUAL=reached,Y,ClearLocalCostmap;ClearGlobalCostmap;Spin;BackUp,18,176782,208350
+5,edadb136f08bcda33012816801b36790,T,120.000,W5 Map3 timeout=120 run_5 | TIMEOUT:VISUAL=not_reached,Y,ClearLocalCostmap;BackUp;ClearGlobalCostmap;Spin,18,217331,249244
+6,5507d3ee8de0232883476f31a807121a,T,120.000,W5 Map3 timeout=120 run_6 | TIMEOUT:VISUAL=reached,Y,ClearLocalCostmap;ClearGlobalCostmap;Spin;BackUp,16,274295,305093
+7,5b6a43c0bca2f433cac2022984c0178d,T,120.000,W5 Map3 timeout=120 run_7 | TIMEOUT:VISUAL=reached,Y,ClearLocalCostmap;ClearGlobalCostmap;Spin;BackUp,18,342162,373390
+8,eaf996363fc11b0436104d00a1c86600,T,120.000,W5 Map3 timeout=120 run_8 | TIMEOUT:VISUAL=reached,Y,ClearLocalCostmap;ClearGlobalCostmap;Spin;BackUp,18,380279,411575
+9,555969644f0e420f0f8eb69180f67e0e,T,120.000,W5 Map3 timeout=120 run_9 | TIMEOUT:VISUAL=reached,Y,ClearLocalCostmap;BackUp;ClearGlobalCostmap;Spin,18,426007,457643
+10,2729fe37862413f33955aa111dc058c4,T,120.000,W5 Map3 timeout=120 run_10 | TIMEOUT:VISUAL=reached,Y,ClearLocalCostmap;BackUp,7,464658,491591
+11,42c0d37e75a84e0f7cddf853f071c52a,T,120.000,W5 Map3 timeout=120 run_11 | TIMEOUT:VISUAL=reached,Y,ClearLocalCostmap;ClearGlobalCostmap;Spin;BackUp,18,495897,528153
+12,e140b606015f64263201bce841d4bcbd,T,120.000,W5 Map3 timeout=120 run_12 | TIMEOUT:VISUAL=reached,Y,ClearLocalCostmap;ClearGlobalCostmap;Spin;BackUp,18,535168,566294
+13,eae183a5a0006b5b81ab237711442ec8,T,120.000,W5 Map3 timeout=120 run_13 | TIMEOUT:VISUAL=not_reached,Y,ClearLocalCostmap;ClearGlobalCostmap;Spin;BackUp,18,604591,636504
+14,a3ff5c378b39d1ad724f230b70db37d5,T,120.000,W5 Map3 timeout=120 run_14 | TIMEOUT:VISUAL=reached,Y,ClearLocalCostmap;BackUp;ClearGlobalCostmap;Spin,18,645548,677228
+15,16419c6cab0ef8c86cc4a0b575e04e0c,T,120.000,W5 Map3 timeout=120 run_15 | TIMEOUT:VISUAL=reached,Y,ClearLocalCostmap;BackUp,7,684180,710962
+16,17454e7ebaf852731a641caec564639e,T,120.000,W5 Map3 timeout=120 run_16 | TIMEOUT:VISUAL=not_reached,Y,ClearLocalCostmap;ClearGlobalCostmap;Spin;BackUp,20,745652,777046
+17,1f8aa804df7094f27ade9279239adbbc,T,120.000,W5 Map3 timeout=120 run_17 | TIMEOUT:VISUAL=reached,Y,ClearLocalCostmap;BackUp;ClearGlobalCostmap;Spin,18,785438,816526
+18,8bd7f98f8a08f6bb97dc8f2881d7c6f8,T,120.000,W5 Map3 timeout=120 run_18 | TIMEOUT:VISUAL=reached,Y,ClearLocalCostmap;ClearGlobalCostmap;Spin;BackUp,18,847086,878445
+19,a9398808d722d833c836437681c91337,T,120.000,W5 Map3 timeout=120 run_19 | TIMEOUT:VISUAL=reached,Y,ClearLocalCostmap;BackUp,7,887052,913645
+20,566d0f4f82d12d32b36894713ef18b66,S,67.186,W5 Map3 timeout=120 run_20,N,,0,917888,922072
