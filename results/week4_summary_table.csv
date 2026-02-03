@@ -1,0 +1,7 @@
+group,file,runs,success_rate,avg_time,median_time,min_time,max_time,delta_avg_vs_baseline,delta_median_vs_baseline,notes
+baseline,results/week4_baseline_runs.csv,20,1.000,13.139,12.996,12.471,14.007,0.000,0.000,固定起点->C点；作为Week4对照组
+A_tol04,results/week4_A_runs.csv,20,1.000,12.126,11.811,11.661,13.980,-1.013,-1.185,general_goal_checker.xy_goal_tolerance=0.4；其余保持不变
+B_theta06,results/week4_B_theta06_runs.csv,20,1.000,13.039,12.761,12.361,14.303,-0.100,-0.235,FollowPath.max_vel_theta=0.6；其余保持不变
+Bprime_theta04,results/week4_theta04_runs.csv,20,1.000,13.477,13.409,12.471,14.409,0.338,0.413,FollowPath.max_vel_theta=0.4；其余保持不变
+AplusB_tol04_theta06,results/week4_AplusB_tol04_theta06_runs.csv,20,1.000,12.365,12.061,11.661,14.248,-0.774,-0.935,xy_goal_tolerance=0.4 + max_vel_theta=0.6
+AplusBprime_tol04_theta04,results/week4_AplusB_tol04_theta04_runs.csv,20,1.000,12.494,12.261,11.860,13.653,-0.645,-0.735,xy_goal_tolerance=0.4 + max_vel_theta=0.4
