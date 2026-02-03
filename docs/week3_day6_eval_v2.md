@@ -23,7 +23,7 @@
     wc -l /tmp/week3_day6_bt.log
     tail -n 3 /tmp/week3_day6_bt.log
 
-### Step 2 — 每次记录 1 条（终端 D / E 任意一个）
+### Step 2 — 每次记录 1 条
     cd ~/ros2_nav2_portfolio
     source /opt/ros/humble/setup.bash
     python3 scripts/eval_v2_action_recovery.py \

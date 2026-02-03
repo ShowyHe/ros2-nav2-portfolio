@@ -3,7 +3,7 @@ import argparse
 import csv
 import os
 import time
-from typing import List, Tuple, Set
+from typing import List, Tuple, Set, Optional
 
 import rclpy
 from rclpy.node import Node
@@ -12,8 +12,10 @@ from action_msgs.msg import GoalStatusArray
 ACTIVE = {1, 2, 3}      # ACCEPTED/EXECUTING/CANCELING
 TERMINAL = {4, 5, 6}    # SUCCEEDED/CANCELED/ABORTED
 
+
 def ns_now(node: Node) -> int:
     return int(node.get_clock().now().nanoseconds)
+
 
 def goal_uuid_hex(goal_id) -> str:
     # Humble: goal_id.uuid is uint8[16] (often numpy.ndarray)
@@ -21,6 +23,7 @@ def goal_uuid_hex(goal_id) -> str:
         return bytes(goal_id.uuid).hex()
     except Exception:
         return "".join(f"{int(b):02x}" for b in goal_id.uuid)
+
 
 def load_keywords(path: str) -> List[str]:
     kws = []
@@ -32,9 +35,11 @@ def load_keywords(path: str) -> List[str]:
             kws.append(ln)
     return kws
 
+
 def read_lines(path: str) -> List[str]:
     with open(path, "r", encoding="utf-8", errors="ignore") as f:
         return f.readlines()
+
 
 def count_recovery_hits(lines: List[str], keywords: List[str]) -> Tuple[str, str, int]:
     hits = []
@@ -55,13 +60,30 @@ def count_recovery_hits(lines: List[str], keywords: List[str]) -> Tuple[str, str
     recovery = "Y" if total > 0 else "N"
     return recovery, ";".join(uniq), total
 
+
 def next_run_id(csv_path: str) -> int:
+    """
+    更稳：读取最后一条数据行的 run，run+1。
+    避免用“行数”导致手工插入/删行后 run 重复。
+    """
     if not os.path.exists(csv_path):
         return 1
-    # 行数 = 表头 + 数据行，下一次 run 就用“当前总行数”
+
+    last_run = 0
     with open(csv_path, "r", encoding="utf-8", errors="ignore") as f:
-        n = sum(1 for _ in f)
-    return max(1, n)
+        for ln in f:
+            ln = ln.strip()
+            if not ln or ln.startswith("run,"):
+                continue
+            # 数据行：run 在第一列
+            parts = ln.split(",", 1)
+            try:
+                last_run = int(parts[0])
+            except Exception:
+                pass
+
+    return last_run + 1 if last_run > 0 else 1
+
 
 class EvalV2(Node):
     def __init__(self, args):
@@ -71,12 +93,14 @@ class EvalV2(Node):
         self.btlog = args.btlog
         self.keywords = load_keywords(args.keywords)
 
-        self.goal_id = None
-        self.start_ns = None
-        self.end_ns = None
-        self.result = None
+        self.goal_id: Optional[str] = None
+        self.start_ns: Optional[int] = None
+        self.end_ns: Optional[int] = None
+        self.result: Optional[str] = None
 
         self.bt_start_line = self._bt_line_count()
+
+        self.row_written = False
 
         self.sub = self.create_subscription(
             GoalStatusArray,
@@ -121,19 +145,38 @@ class EvalV2(Node):
                         self.result = "T"
                     else:
                         self.result = "F"
-                    self.write_row_and_exit()
+                    self.write_row()   # 终态正常写入
                     return
 
-    def write_row_and_exit(self):
+    def write_row(
+        self,
+        result_override: Optional[str] = None,
+        time_sec_override: Optional[float] = None,
+        note_suffix: str = ""
+    ):
+        if self.row_written:
+            return
+        self.row_written = True
+
+        # 结束行：以当前 btlog 总行数为准
         all_lines = read_lines(self.btlog) if os.path.exists(self.btlog) else []
         bt_end_line = len(all_lines)
         chunk = all_lines[self.bt_start_line:bt_end_line]
 
         recovery, types, hits = count_recovery_hits(chunk, self.keywords)
 
-        time_sec = ""
-        if self.start_ns and self.end_ns and self.end_ns > self.start_ns:
-            time_sec = f"{(self.end_ns - self.start_ns)/1e9:.3f}"
+        # result / time
+        final_result = result_override or self.result or ""
+        if time_sec_override is not None:
+            time_sec = f"{time_sec_override:.3f}"
+        else:
+            time_sec = ""
+            if self.start_ns and self.end_ns and self.end_ns > self.start_ns:
+                time_sec = f"{(self.end_ns - self.start_ns)/1e9:.3f}"
+
+        # notes
+        base_note = self.args.note or ""
+        final_note = (base_note + ((" | " + note_suffix) if note_suffix else "")).strip()
 
         out = self.args.out
         os.makedirs(os.path.dirname(out), exist_ok=True)
@@ -142,9 +185,9 @@ class EvalV2(Node):
         run_id = next_run_id(out)
 
         fieldnames = [
-            "run","goal_id","result","time_sec","notes",
-            "recovery","recovery_types","recovery_hits",
-            "bt_start_line","bt_end_line"
+            "run", "goal_id", "result", "time_sec", "notes",
+            "recovery", "recovery_types", "recovery_hits",
+            "bt_start_line", "bt_end_line"
         ]
 
         with open(out, "a", newline="", encoding="utf-8") as f:
@@ -154,9 +197,9 @@ class EvalV2(Node):
             w.writerow({
                 "run": run_id,
                 "goal_id": self.goal_id or "",
-                "result": self.result or "",
+                "result": final_result,
                 "time_sec": time_sec,
-                "notes": self.args.note or "",
+                "notes": final_note,
                 "recovery": recovery,
                 "recovery_types": types,
                 "recovery_hits": str(hits),
@@ -165,13 +208,10 @@ class EvalV2(Node):
             })
 
         self.get_logger().info(
-            f"[logged] run={run_id} result={self.result} time_sec={time_sec} "
+            f"[logged] run={run_id} result={final_result} time_sec={time_sec} "
             f"recovery={recovery} types={types if types else '-'} hits={hits}"
         )
         self.get_logger().info(f"Output: {out}")
-        self.destroy_node()
-        rclpy.shutdown()
-        raise SystemExit(0)
 
 
 def main():
@@ -188,14 +228,44 @@ def main():
     node = EvalV2(args)
 
     t0 = time.time()
-    while rclpy.ok():
-        rclpy.spin_once(node, timeout_sec=0.2)
-        if node.result is not None:
-            break
-        if time.time() - t0 > args.timeout:
-            node.get_logger().error("超时：没捕捉到 goal 或没等到终态。确保：先启动脚本，再点 Nav2 Goal。")
-            break
-    rclpy.shutdown()
+    try:
+        while rclpy.ok():
+            rclpy.spin_once(node, timeout_sec=0.2)
+
+            # 终态写入后就退出
+            if node.row_written and node.result is not None:
+                break
+
+            # 超时：也写入一条
+            if time.time() - t0 > args.timeout and not node.row_written:
+                if node.goal_id is None:
+                    node.get_logger().error("超时：未捕捉到 goal_id（请确保先启动脚本，再点 Nav2 Goal）")
+                    node.write_row(
+                        result_override="T",
+                        time_sec_override=args.timeout,
+                        note_suffix="TIMEOUT:no_goal_id"
+                    )
+                else:
+                    node.get_logger().error("超时：已捕捉到 goal_id，但未等到终态（可能导航耗时>timeout）")
+                    node.write_row(
+                        result_override="T",
+                        time_sec_override=args.timeout,
+                        note_suffix="TIMEOUT:no_terminal_status"
+                    )
+                break
+
+    except KeyboardInterrupt:
+        # 你手动 Ctrl+C：也尽量落一条，免得白跑
+        if not node.row_written:
+            if node.goal_id is None:
+                node.write_row(result_override="T", time_sec_override=args.timeout, note_suffix="INTERRUPT:no_goal_id")
+            else:
+                node.write_row(result_override="T", time_sec_override=args.timeout, note_suffix="INTERRUPT:goal_no_terminal")
+
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+
 
 if __name__ == "__main__":
     main()

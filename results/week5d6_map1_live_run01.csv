@@ -1,0 +1,11 @@
+run,goal_id,result,time_sec,notes,recovery,recovery_types,recovery_hits,bt_start_line,bt_end_line
+1,9042104bd8e51c2269d0530a4b51aad6,S,27.928,W5D6 map1 goal=D run=01,N,,0,0,1727
+2,5ff0eaae5e080ce066c5aac96091bf5d,S,40.131,W5D6 map1 goal=D run=01,Y,ClearLocalCostmap,2,1727,4177
+3,cce033f2549b639cd12c81754a77a5a1,S,43.716,W5D6 map1 goal=D run=01,Y,ClearLocalCostmap,2,4177,6947
+4,472b2b9e2d9c93f2a8a7f2f8a1be31bb,S,30.906,W5D6 map1 goal=D run=01,N,,0,6947,8863
+5,55a7c0641f99aaf2c22c4242b3682067,S,26.820,W5D6 map1 goal=D run=01,N,,0,8863,10527
+6,e2cdb032a5f1977ce0cff39075c4e65c,S,29.109,W5D6 map1 goal=D run=01,N,,0,10527,12317
+7,4f78a303a8c87d13bbacde69a6b4c5b4,S,27.346,W5D6 map1 goal=D run=01,N,,0,12317,13981
+8,d4efb09888cbda596e3db081fc010a46,S,32.672,W5D6 map1 goal=D run=01,Y,ClearLocalCostmap,2,13981,16058
+9,011d9ad0caea5e0d771bc2199abf9280,S,26.870,W5D6 map1 goal=D run=01,N,,0,16058,17848
+10,3e9ad930b28a3b0e11d0ecc35186ef24,S,27.006,W5D6 map1 goal=D run=01,N,,0,17848,19449

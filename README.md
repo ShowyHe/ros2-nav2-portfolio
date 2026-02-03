@@ -83,3 +83,6 @@ ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=True
 
 ## Docs (Interview / Notes)
 - Week1 Day7 Recap: docs/week1_day7_recap.md
+- Week4 总结：docs/week4_day6_summary.md
+- Week4 汇总表：results/week4_summary_table.csv
+- Week4 复现入口：docs/week4_day7_release.md
