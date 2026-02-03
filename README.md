@@ -86,3 +86,12 @@ ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=True
 - Week4 总结：docs/week4_day6_summary.md
 - Week4 汇总表：results/week4_summary_table.csv
 - Week4 复现入口：docs/week4_day7_release.md
+
+## Failure Library（Week6）
+- 入口：[`docs/week6_failure_index.md`](docs/week6_failure_index.md)
+
+### 定位方法四步法
+1. **现象**：用统一口径描述（S/T/F、120s、是否可视接近、恢复类型/强度）。  
+2. **证据**：最小证据集（runs 字段 + 必要的话题/TF/QoS 检查）。  
+3. **定位**：归类到根因桶（结构性可行性 / 控制层 / costmap 表征 / timebase&QoS / 定位收敛）。  
+4. **验证**：修复动作 → 对照复跑 → 指标变化作为唯一验收。  
