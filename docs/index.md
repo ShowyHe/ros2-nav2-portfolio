@@ -1,8 +1,5 @@
 # Docs 总索引（Week1–Week7）
 
-> README 保持“一屏入口”；所有周文档在此页集中导航。  
-> 约定：Week 内文档按 Day 顺序排列；Case 库单独成组。
-
 ---
 
 ## Week1（跑通 + 定口径）
@@ -69,6 +66,11 @@
 
 ## Week7（规约 + 入口 + 自检清单）
 - docs/week7_summary_packaging.md
+
+---
+
+## Week8（总入口：证据绑定 Packet）
+- docs/week8_packet.md
 
 ## Results 入口（数据总入口）
 
