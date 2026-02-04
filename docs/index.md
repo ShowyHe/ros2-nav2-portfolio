@@ -1,4 +1,3 @@
-cat > docs/index.md << 'EOF'
 # Docs 总索引（Week1–Week7）
 
 > README 保持“一屏入口”；所有周文档在此页集中导航。  
@@ -68,6 +67,16 @@ cat > docs/index.md << 'EOF'
 
 ---
 
-## Week7（作品集打包）
-- docs/week7/（本周过程文档将放在该目录）
-EOF
+## Week7（规约 + 入口 + 自检清单）
+- docs/week7_summary_packaging.md
+
+## Results 入口（数据总入口）
+
+### 入口
+- Week1 基线：`results/w1d6_baseline.csv`
+- Week4 汇总表：`results/week4_summary_table.csv`
+- Week5 汇总表：`results/week5_summary_table.csv`
+
+### 说明
+- `runs.csv`：逐次运行的原始记录（证据数据）。
+- `summary_table.csv`：阅读与对比的入口（结论入口）。

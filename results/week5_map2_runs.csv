@@ -1,3 +1,4 @@
+run,goal_id,result,time_sec,notes,recovery,recovery_types,recovery_hits,bt_start_line,bt_end_line
 1,dfd2d9d4d328711f896cd1f5a136ea6d,S,61.261,W5D3 Map2 timeout=120 run_1,Y,ClearLocalCostmap;Spin,5,251364,259468
 2,f3967b4e414fb195277c722f334c402a,S,56.881,W5D3 Map2 timeout=120 run_2,Y,ClearLocalCostmap,2,262455,266107
 3,b9f84add6f320766114a8ff169683135,S,49.361,W5D3 Map2 timeout=120 run_3,N,,0,269094,272207
