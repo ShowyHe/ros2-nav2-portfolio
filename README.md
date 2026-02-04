@@ -68,18 +68,7 @@ RViz 操作：
 
 ## Docs / Notes（文档索引）
 
-### Week1（跑通与口径）
-- Week1 Day5 复现记录：docs/week1_day5_run_repro.md
-- Week1 Day6 基线评估说明：docs/week1_day6_baseline_eval.md
-- Week1 Day7 复盘：docs/week1_day7_recap.md
-- Week1 Day6 固定目标点截图：picture/week1_day6_ABCDpoint.png
-
-### Week4（最小对照实验）
-- Week4 Day6 总结：docs/week4_day6_summary.md
-- Week4 Day7 总结：docs/week4_day7_summary.md
-
-### Week5（泛化 + 回放）
-- Week5 Day7 总结：docs/week5_day7_summary.md
+docs/index.md
 
 ---
 
