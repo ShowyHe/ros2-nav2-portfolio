@@ -1,4 +1,4 @@
-# Docs 总索引（Week1–Week7）
+# Docs 总索引（Week1–Week8）
 
 ---
 
@@ -70,7 +70,7 @@
 ---
 
 ## Week8（总入口：证据绑定 Packet）
-- docs/week8_packet.md
+- docs/week8_ready_packet.md
 
 ## Results 入口（数据总入口）
 
