@@ -12,14 +12,15 @@
 ### 输入
 - 地图：Map2、Map3
 - 点位：
+  - Map2: start=(-1, 2)，goal=(-6.2, -0.2)
   - Map3：start=(1, 3)，goal=(6.15, -1.15)
 - 日志：
-  - Map2：`/tmp/week5_map2_bt.log`（如果你用的是这个名字）
+  - Map2：`/tmp/week5_map2_bt.log`
   - Map3：`/tmp/week5_map3_bt.log`
 
 ### 输出（原始数据不在 md 里重复）
 - Map2 原始 runs：
-  - `results/week5_map2_runs.csv`（或你实际命名的 Map2 文件）
+  - `results/week5_map2_runs.csv`
 - Map3 原始 runs：
   - `results/week5_map3_runs.csv`
 
@@ -69,5 +70,5 @@
 
 ## 7. Week5 Day4该做什么
 - 把 Map1 / Map2 / Map3 三张地图的结果做成一个汇总表（成功率 / TIMEOUT 比例 / hits 均值与分布）
-- 输出“泛化结论”：哪张地图最稳、哪张最吃力、差异体现在哪里（用数据说话）
+- 输出“泛化结论”：哪张地图最稳、哪张最吃力、差异体现在哪里
 
