@@ -1,22 +1,35 @@
-# ROS2 Nav2 Portfolio（TurtleBot3 / Humble）
+# ROS2 + Nav2 Portfolio（TurtleBot3 / Humble）
 
 [English](README_EN.md) | [中文](README.md)
 
-一个以 **TB3 + Nav2（Humble）** 为主线的可复现学习与排障仓库：沉淀固定口径的评估数据、最小对照实验、跨地图泛化、bag 回放链路，以及失败案例库。
+一个以 **ROS2 + Nav2（Humble）** 为主线、基于 TurtleBot3 的机器人导航学习与工程实践仓库。
+
+目标不是只把 Demo 跑起来，而是把 ROS2 基础使用、TF 坐标关系、Nav2 的 planner / controller / costmap / Behavior Tree、参数实验、评估、bag 回放、跨地图泛化和失败案例，逐步沉淀成 **可复现、可量化、可定位、可回顾** 的工程能力证据。
+
+> 学习节奏说明：本仓库对应第一阶段的 8 周学习计划。实际执行时为了压缩学习周期，按每天推进约 2～3 个计划日的节奏完成；后续又单独进行了 30 天强化训练，把“会看、会跟着做”继续推进到“自己能敲、能解释、能应用”。
 
 ---
 
 ## Quick Start
 
-### Demo（Nav2 系统 launch）
-- 入口文档：docs/week1_day5_run_repro.md
+### 1. 总索引
+- 文档入口：docs/index.md
 
-### bag 录制 / 回放（Week5 固化流程）
+### 2. ROS2 + Nav2 Demo
+- 复现入口：docs/week1_day5_run_repro.md
+
+### 3. bag 录制 / 回放（Week5 固化流程）
 - 入口文档：docs/week5_day7_summary.md
+
+### 4. Failure Library
+- 失败案例入口：docs/week6_failure_index.md
+
+### 5. Ready Packet
+- 8 周能力与证据总入口：docs/week8_ready_packet.md
 
 ---
 
-## 8 周完成内容总览（Week1–Week8）
+## 8 周 ROS2 + Nav2 学习内容总览（Week1–Week8）
 
 本仓库按周递进把“能跑起来”推进到“可复现、可量化、可定位、可沉淀”。
 
@@ -56,7 +69,7 @@
 
 ## 八周最终交付是什么？
 
-**一个可复现的 Nav2 学习与排障作品集仓库**，包含：
+**一个可复现的 ROS2 + Nav2 学习与排障作品集仓库**，包含：
 - 权威数据入口（基线与汇总表）+ 逐次 runs 原始记录；
 - 按周沉淀的过程文档（链路解释、评估、对照、泛化、回放）；
 - 失败案例库（统一结构、可检索）；
